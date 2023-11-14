@@ -1,0 +1,14 @@
+在对时间序列进行建模之前，需要保证其平稳性。
+可以使用adfuller进行单位根检验，确定时间序列是否具有单位根(非平稳性)
+可以选用pvalue值进行检验，如果pvalue小于0.05才能满足平稳性的假设
+单位根检验基于ADF检验方法，返回ADF统计量，p-value，滞后阶数lag，观测值数量，临界值Critical values
+构建对数收益率的方法：
+returns = np.log（df/df.shift(1)）.dropna()
+
+可以利用AIC值来确定滞后阶数
+把范围内的每个lag代入model中，再对每个result使用AIC或BIC进行检验
+找到BIC或AIC最小的滞后阶数，将其确定为best_lag
+确定滞后阶数后 将其代入model
+results = model.fit(best_lag)
+再对结果进行汇总
+results.summary()
